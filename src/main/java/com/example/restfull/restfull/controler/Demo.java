@@ -38,7 +38,7 @@ public class Demo {
         user.setUserAge(age);
         int status = service.saveData(user);
         if(status>0){
-            result.put("result","user added successfuly");
+            result.put("result","user added successfuly with user id : "+status);
             return new ResponseEntity<>(result,HttpStatus.OK);
         }
         else {
