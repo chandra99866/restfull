@@ -48,6 +48,17 @@ public class Demo {
 
     }
 
+    @GetMapping("/user/{id}")
+    public ResponseEntity<Object> getUser(@PathVariable int id){
+        User user = service.getData(id);
+        if(user!=null){
+            return new ResponseEntity<>(user,HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>("no user found",HttpStatus.NOT_FOUND);
+        }
+    }
+
 
 
 }
