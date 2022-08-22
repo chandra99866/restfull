@@ -33,7 +33,6 @@ public class Demo {
     public ResponseEntity<Object> userSave(@RequestParam String name,@RequestParam int age){
         Map<String,String> result = new HashMap<>();
         User user = new User();
-        System.out.println(age);
         user.setUserName(name);
         user.setUserAge(age);
         int status = service.saveData(user);
