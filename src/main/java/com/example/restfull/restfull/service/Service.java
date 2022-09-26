@@ -25,7 +25,7 @@ public class Service  {
         if(repo.findExistOfuser(user.getUserName(),user.getUserAge())>0){
             throw new Exception("user already exists");
         }
-        user.setDate(new Date());
+        user.setCreatedDate(new Date());
         repo.save(user);
         return user.getUser_id();
     }
