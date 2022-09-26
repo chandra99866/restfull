@@ -17,8 +17,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 
 public class Swaggerconfig {                                    
-    public static final String TAG_1 = "PSS Reports";
-    public static final String TAG_2 = "PSS Validations";
+
 
 	@Bean
     public Docket api() { 
@@ -27,12 +26,10 @@ public class Swaggerconfig {
           .apis(RequestHandlerSelectors.any())   
           .paths(PathSelectors.any())   
           .build()
-          .apiInfo(apiInfo())
-          .tags(new Tag(TAG_1, "Reports module"))
-          .tags(new Tag(TAG_2, "Validation module"));
+          .apiInfo(apiInfo());
     }
     
     private ApiInfo apiInfo() {
-        return new ApiInfoBuilder().title("PSS Workflow API").version("1.0.0").build();
+        return new ApiInfoBuilder().title("Restfull API").version("1.0.0").build();
     }
 }
