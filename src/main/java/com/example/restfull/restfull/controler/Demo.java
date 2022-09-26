@@ -60,18 +60,40 @@ public class Demo {
 
     @GetMapping("/user/{id}")
     public ResponseEntity<Object> getUser(@PathVariable int id){
-        User user = service.getData(id);
+        User user = service.getUserData(id);
         Map<String,Object> result = new LinkedHashMap<>();
-        if(user!=null){
-            result.put("userDetials",user);
-            result.put("Time", new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date()));
+        try {
+            if (user != null) {
+                result.put("userDetials", user);
+                result.put("Time", new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date()));
 
-            return new ResponseEntity<>(result,HttpStatus.OK);
+                return new ResponseEntity<>(result, HttpStatus.OK);
+            } else {
+                result.put("error", "no user found");
+                result.put("Time", new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date()));
+                return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+            }
         }
-        else {
-            result.put("error","no user found");
+        catch (Exception e){
+            result.put("error",e.getLocalizedMessage());
             result.put("Time", new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date()));
-            return new ResponseEntity<>(result,HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(result,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/getAllUsers")
+    public ResponseEntity<Object> getAllUsers(){
+        LinkedHashMap<String,Object> result = new LinkedHashMap<>();
+        try {
+            result.put("users",service.getAllUserData());
+            result.put("Time", new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date()));
+            return new ResponseEntity<>(result,HttpStatus.OK);
+
+        }
+        catch (Exception e){
+            result.put("error",e.getLocalizedMessage());
+            result.put("Time", new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date()));
+            return new ResponseEntity<>(result,HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

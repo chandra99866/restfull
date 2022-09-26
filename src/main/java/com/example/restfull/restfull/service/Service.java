@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.List;
 
 
 @org.springframework.stereotype.Service
@@ -32,7 +33,7 @@ public class Service  {
 
 
 
-    public User getData(int id){
+    public User getUserData(int id){
      try {
        User user = repo.findById(id).get();
        return user;
@@ -40,6 +41,10 @@ public class Service  {
        catch (Exception e) {
 		return null;
 	}
+    }
+
+    public List<User> getAllUserData(){
+        return repo.findAll();
     }
 
 
