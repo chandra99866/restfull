@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -96,6 +97,24 @@ public class Demo {
             result.put("Time", new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date()));
             return new ResponseEntity<>(result,HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+
+    @PostMapping("/saveFile")
+    public ResponseEntity<Object> saveFile(@RequestPart MultipartFile file){
+        LinkedHashMap<String,Object> result = new LinkedHashMap<>();
+
+        try{
+            service.saveFile(file);
+            result.put("result","File Save");
+            result.put("Time", new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date()));
+            return  new ResponseEntity<>(result,HttpStatus.OK);
+        }catch (Exception e){
+            result.put("error",e.getLocalizedMessage());
+            result.put("Time", new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date()));
+            return new ResponseEntity<>(result,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 
 
