@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+//@CrossOrigin(origins = "*", maxAge = 3600)
 
 @RestController
 @RequestMapping("/first")
@@ -101,7 +102,7 @@ public class Demo {
 
 
     @PostMapping("/saveFile")
-    public ResponseEntity<Object> saveFile(@RequestPart MultipartFile file){
+    public ResponseEntity<Object> saveFile(@RequestBody MultipartFile file){
         LinkedHashMap<String,Object> result = new LinkedHashMap<>();
 
         try{
