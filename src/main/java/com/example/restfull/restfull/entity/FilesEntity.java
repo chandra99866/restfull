@@ -51,7 +51,6 @@ public class FilesEntity {
 	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
 	}
-    
-    
+
 
 }

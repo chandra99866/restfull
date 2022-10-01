@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-@CrossOrigin(originPatterns = "*",maxAge = 3600)
+
 @RestController
 @RequestMapping("/first")
 public class Demo {
