@@ -3,17 +3,15 @@ package com.example.restfull.restfull.entity;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Data
 public class FilesEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "file_serial")
+	@SequenceGenerator(name = "file_serial",sequenceName = "fileCount",allocationSize = 1)
     Long slNo;
 
     private String fileName;

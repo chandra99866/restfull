@@ -34,12 +34,14 @@ public class Service  {
 
     @Transactional
     public int saveData(User user) throws Exception {
+
         if(repo.findExistOfuser(user.getUserName(),user.getUserAge())>0){
             throw new Exception("user already exists");
         }
         user.setCreatedDate(new Date());
         repo.save(user);
         return user.getUser_id();
+
     }
 
 
@@ -49,10 +51,10 @@ public class Service  {
      try {
        User user = repo.findById(id).get();
        return user;
-     }
+        }
        catch (Exception e) {
 		return null;
-	}
+	    }
     }
 
     public List<User> getAllUserData(){
@@ -61,16 +63,17 @@ public class Service  {
 
 
     public boolean saveFile(MultipartFile file) throws IOException {
-       File file1 = new File(file_path+file.getOriginalFilename());
-       file.transferTo(file1);
-       FileWriter fw = new FileWriter(file1);
-       fw.close();
+
+        File file1 = new File(file_path+file.getOriginalFilename());
+        file.transferTo(file1);
+        FileWriter fw = new FileWriter(file1);
+        fw.close();
         FilesEntity filesEntity = new FilesEntity();
         filesEntity.setFileName(file.getOriginalFilename());
         filesEntity.setFileSize(file.getSize());
         filesEntity.setUpdateDate(new Date());
         filesRepo.save(filesEntity);
-       return true;
+        return true;
     }
 
 
