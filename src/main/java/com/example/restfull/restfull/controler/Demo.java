@@ -105,9 +105,14 @@ public class Demo {
     public ResponseEntity<Object> saveFile(@RequestBody MultipartFile file){
         LinkedHashMap<String,Object> result = new LinkedHashMap<>();
 
+        if(file.getSize()<=0){
+            result.put("error","File is Blank");
+            result.put("Time", new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date()));
+            return new ResponseEntity<>(result,HttpStatus.BAD_REQUEST);
+        }
+
         try{
-            service.saveFile(file);
-            result.put("result","File Save");
+            result.put("result",service.saveFile(file));
             result.put("Time", new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date()));
             return  new ResponseEntity<>(result,HttpStatus.OK);
         }catch (Exception e){

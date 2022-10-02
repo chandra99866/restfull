@@ -9,7 +9,9 @@ import java.util.Date;
 @Entity
 @Data
 public class FilesEntity {
-    @Id
+   
+
+	@Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "file_serial")
 	@SequenceGenerator(name = "file_serial",sequenceName = "fileCount",allocationSize = 1)
     Long slNo;
@@ -51,6 +53,14 @@ public class FilesEntity {
 	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
 	}
+	
+	 @Override
+		public String toString() {
+			return "FilesEntity [slNo=" + slNo + ", fileName=" + fileName + ", fileSize=" + fileSize + ", updateDate="
+					+ updateDate + ", getSlNo()=" + getSlNo() + ", getFileName()=" + getFileName() + ", getFileSize()="
+					+ getFileSize() + ", getUpdateDate()=" + getUpdateDate() + ", getClass()=" + getClass()
+					+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+		}
 
 
 }

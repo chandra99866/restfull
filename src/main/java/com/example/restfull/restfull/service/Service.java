@@ -62,18 +62,30 @@ public class Service  {
     }
 
 
-    public boolean saveFile(MultipartFile file) throws IOException {
+    public String saveFile(MultipartFile file) throws IOException {
 
         File file1 = new File(file_path+file.getOriginalFilename());
         file.transferTo(file1);
         FileWriter fw = new FileWriter(file1);
         fw.close();
-        FilesEntity filesEntity = new FilesEntity();
-        filesEntity.setFileName(file.getOriginalFilename());
-        filesEntity.setFileSize(file.getSize());
-        filesEntity.setUpdateDate(new Date());
-        filesRepo.save(filesEntity);
-        return true;
+        FilesEntity filesEntity = filesRepo.findByfileName(file.getOriginalFilename());
+
+        if(filesEntity!=null){
+            filesEntity.setFileSize(file.getSize());
+            filesEntity.setUpdateDate(new Date());
+            filesRepo.save(filesEntity);
+            return "File replace successfully...";
+        }
+        else {
+
+            FilesEntity filesEntity2 = new FilesEntity();
+            filesEntity2.setFileName(file.getOriginalFilename());
+            filesEntity2.setFileSize(file.getSize());
+            filesEntity2.setUpdateDate(new Date());
+            filesRepo.save(filesEntity2);
+            return "File Save Successfully...";
+        }
+
     }
 
 

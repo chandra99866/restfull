@@ -4,4 +4,5 @@ import com.example.restfull.restfull.entity.FilesEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface FilesRepo extends JpaRepository<FilesEntity, Long> {
+    public  FilesEntity findByfileName(String fileName);
 }
