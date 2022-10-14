@@ -99,14 +99,10 @@ public class Service  {
 
     public Resource getFile(String fileName) throws Exception {
         FilesEntity filesEntity = filesRepo.findByfileName(fileName);
-        Path foundFile;
         if(filesEntity!=null) {
-            Path dirPath = Paths.get(file_path);
-
-
+            Path path = Paths.get(file_path+fileName);
+            return new UrlResource(path.toUri());
         }
-
-
         return null;
     }
 

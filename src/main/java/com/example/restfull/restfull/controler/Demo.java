@@ -3,12 +3,15 @@ package com.example.restfull.restfull.controler;
 import com.example.restfull.restfull.entity.User;
 import com.example.restfull.restfull.service.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.Resource;
+
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -146,11 +149,21 @@ public class Demo {
     public ResponseEntity<Object> getFile(@PathVariable String fileName){
         LinkedHashMap<String,Object> result = new LinkedHashMap<>();
         try {
-            Resource resource = (Resource) service.getFile(fileName);
-            return (ResponseEntity<Object>) resource;
-//            result.put("users",service.getAllFileNames());
-//            result.put("Time", new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date()));
-//            return new ResponseEntity<>(result,HttpStatus.OK);
+            Resource resource = service.getFile(fileName);
+
+            if(resource!=null) {
+                // "application/octet-stream"
+
+                return ResponseEntity.ok()
+                        .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                        .contentLength(resource.contentLength())
+                        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                        .body(resource);
+            }else {
+                result.put("error","No File Found");
+                result.put("Time", new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date()));
+                return new ResponseEntity<>(result,HttpStatus.INTERNAL_SERVER_ERROR);
+            }
 
         }
         catch (Exception e){
