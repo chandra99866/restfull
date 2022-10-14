@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -123,6 +125,40 @@ public class Demo {
 
     }
 
+    @GetMapping("/getAllFileNames")
+    public ResponseEntity<Object> getAllFileNames(){
+        LinkedHashMap<String,Object> result = new LinkedHashMap<>();
+        try {
+            result.put("users",service.getAllFileNames());
+            result.put("Time", new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date()));
+            return new ResponseEntity<>(result,HttpStatus.OK);
+
+        }
+        catch (Exception e){
+            result.put("error",e.getLocalizedMessage());
+            result.put("Time", new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date()));
+            return new ResponseEntity<>(result,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    @GetMapping("/getFile/{fileName}")
+    public ResponseEntity<Object> getFile(@PathVariable String fileName){
+        LinkedHashMap<String,Object> result = new LinkedHashMap<>();
+        try {
+            Resource resource = (Resource) service.getFile(fileName);
+            return (ResponseEntity<Object>) resource;
+//            result.put("users",service.getAllFileNames());
+//            result.put("Time", new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date()));
+//            return new ResponseEntity<>(result,HttpStatus.OK);
+
+        }
+        catch (Exception e){
+            result.put("error",e.getLocalizedMessage());
+            result.put("Time", new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date()));
+            return new ResponseEntity<>(result,HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 
 }

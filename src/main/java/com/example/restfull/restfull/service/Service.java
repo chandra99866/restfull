@@ -10,10 +10,15 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
 
@@ -86,6 +91,23 @@ public class Service  {
             return "File Save Successfully...";
         }
 
+    }
+
+    public List<FilesEntity> getAllFileNames(){
+        return filesRepo.findAll();
+    }
+
+    public Resource getFile(String fileName) throws Exception {
+        FilesEntity filesEntity = filesRepo.findByfileName(fileName);
+        Path foundFile;
+        if(filesEntity!=null) {
+            Path dirPath = Paths.get(file_path);
+
+
+        }
+
+
+        return null;
     }
 
 
