@@ -69,11 +69,10 @@ public class Service  {
 
     public String saveFile(MultipartFile file) throws IOException {
 
-        File file1 = new File(file_path+file.getOriginalFilename());
-        file.transferTo(file1);
-        FileWriter fw = new FileWriter(file1);
-        fw.close();
+        Path path = Paths.get(file_path+file.getOriginalFilename());
+
         FilesEntity filesEntity = filesRepo.findByfileName(file.getOriginalFilename());
+        Files.write(path,file.getBytes());
 
         if(filesEntity!=null){
             filesEntity.setFileSize(file.getSize());
